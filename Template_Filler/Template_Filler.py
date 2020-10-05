@@ -39,8 +39,8 @@ def seek_and_destroy(template,keys,data,permissive=False):
         template_args = find_substring(template_line,tmp_arg_mrk)
         line = template_line
         if len(template_args)%2 != 0:
-            print "\33[31mError\33[0m: Template key merker error in:",template_line,"\n"
-            print "The correct usage is: ////Some Template Argument//// "
+            print '\33[31mError\33[0m: Template key merker error in:',template_line,'\n'
+            print 'The correct usage is:'+tmp_arg_mrk+'Some Template Argument'+tmp_arg_mrk
             sys.exit()
         for index in range(len(template_args)/2):
             template_key = template_line[(template_args[2*index]+len(tmp_arg_mrk)):template_args[2*index+1]]
@@ -48,7 +48,7 @@ def seek_and_destroy(template,keys,data,permissive=False):
             try:
                 line = line.replace(template_pattern,data[keys[template_key]])
             except:
-                print "\33[31mError\33[0m: Template key:",j,"was not found in database"
+                print "\33[31mError\33[0m: Template key:",template_key,"was not found in database"
                 sys.exit()
             #print "Replacing template pattern:",template_pattern,"with template argument:",data[keys[template_key]]
             #print line
@@ -93,8 +93,8 @@ def main(template,database):
         student_characteristics = find_characteristics(student)
         #print "\33[32mWorking on\33[0m:",student_characteristics[keys['First Name']],student_characteristics[keys['Last Name']]
         student_label = seek_and_destroy(template,keys,student_characteristics)
-        #if (student_characteristics[keys['Instrument']].find('Cello')!=-1 or student_characteristics[keys['Instrument']].find('Oboe')!=-1):
-            #students_labels.write(student_label)
+        # if (student_characteristics[keys['Ensemble 1st Cycle']].find('StringOrchestra')==0):
+            # students_labels.write(student_label)
         students_labels.write(student_label)
             
 if __name__ == "__main__":
